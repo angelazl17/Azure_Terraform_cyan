@@ -17,3 +17,9 @@ module "network" {
   location = var.location
   resource_group_name = azurerm_resource_group.daily_rg.name
 }
+
+module "aad" {
+  source              = "./modules/aad"
+  location = var.location
+  resource_group_name = azurerm_resource_group.daily_rg.name
+}
