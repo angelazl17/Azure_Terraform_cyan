@@ -4,6 +4,12 @@ variable "environment" {
   default     = "dev"
 }
 
+variable "location" {
+  description = "Azure region"
+  type        = string
+  default     = "eastus"
+}
+
 
 variable "company_name" {
   description = "The code of the machine learning"
