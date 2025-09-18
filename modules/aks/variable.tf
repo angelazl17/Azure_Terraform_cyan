@@ -8,8 +8,7 @@ variable "resource_group_name" {
   description = "The Azure region where resources will be deployed"
 }
 
-variable "cluster_name"{
-  description = "The code of AKS cluster name"
+variable "subnet_id" {
   type        = string
-  
+  description = "subnet id for cluster"
 }

@@ -16,3 +16,9 @@ variable "company_name" {
   type        = string
   default     = "cyan"
 }
+
+variable "cluster_name"{
+  description = "The code of the machine learning"
+  type        = string
+  default ="cyan"
+}
