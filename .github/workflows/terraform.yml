@@ -13,6 +13,9 @@ env:
 jobs:
   terraform:
     runs-on: ubuntu-latest
+    run:
+        # 方法1：为所有步骤设置默认工作目录
+        working-directory: ./terraform
 
     steps:
     - name: Checkout code
@@ -27,6 +30,9 @@ jobs:
       uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Debug - List files
+      run: ls -la && echo "---" && find . -name "*.tfvars" -o -name "*.tf"
 
     # 注意：这里不再需要单独的环境变量！
     - name: Terraform Init
