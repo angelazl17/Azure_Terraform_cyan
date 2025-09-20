@@ -23,4 +23,8 @@ resource "azurerm_kubernetes_cluster" "azurecilium" {
     network_policy = "cilium"
     network_data_plane     = "cilium"
   }
+
+  tags = {
+    Environment = var.environment
+  }
 }

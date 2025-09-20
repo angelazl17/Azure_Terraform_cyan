@@ -35,6 +35,7 @@ module "key-vault" {
 module "aks" {
   source              = "./modules/aks"
   location = var.location
+  environment = var.environment
   resource_group_name = azurerm_resource_group.daily_rg.name
   subnet_id = module.network.web_subnet_id
 }
