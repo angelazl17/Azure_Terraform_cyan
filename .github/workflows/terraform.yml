@@ -42,21 +42,23 @@ jobs:
       run: |
           echo "Deploying to ${{ github.event.inputs.environment }}"
     
-
+    - name: Set environment-specific variables
+      run: |
+        if [ "${{ inputs.environment }}" = "dev" ]; then
+          echo "TF_VAR_environment=dev" >> $GITHUB_ENV
+         
+        else
+          echo "TF_VAR_environment=prod" >> $GITHUB_ENV
+          
+        fi
 
     # 注意：这里不再需要单独的环境变量！
     - name: Terraform Init
       run: terraform init
 
     - name: Terraform Plan     
-      if: ${{ github.event.inputs.environment == 'dev' }}
-      env:
-      TF_VAR_environment: ${{ dev_environment }}
       run: terraform plan 
-      if: ${{ github.event.inputs.environment == 'prod' }}
-      env:
-      TF_VAR_environment: ${{ prod_environment }}
-      run: terraform plan 
+       
 
     - name: Terraform Apply
       run: terraform apply -auto-approve
