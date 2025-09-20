@@ -13,9 +13,7 @@ env:
 jobs:
   terraform:
     runs-on: ubuntu-latest
-    run:
-        # 方法1：为所有步骤设置默认工作目录
-        working-directory: ./terraform
+
 
     steps:
     - name: Checkout code
