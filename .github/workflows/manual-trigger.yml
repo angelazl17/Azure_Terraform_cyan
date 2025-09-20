@@ -1,0 +1,41 @@
+name: Manual Deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Select the environment to deploy to'
+        required: true
+        type: choice
+        options:
+          - staging
+          - production
+        default: 'staging'
+      debug-mode:
+        description: 'Run with debug logging?'
+        required: false
+        type: boolean
+        default: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Display inputs
+        run: |
+          echo "Deploying to ${{ github.event.inputs.environment }}"
+          echo "Debug mode is ${{ github.event.inputs.debug-mode }}"
+
+      # 你可以根据输入参数决定后续步骤
+      - name: Deploy
+        if: ${{ github.event.inputs.environment == 'production' }}
+      #  run: ./deploy-prod.sh
+        run: echo "Workflow production triggered!"
+
+      - name: Deploy (Staging)
+        if: ${{ github.event.inputs.environment == 'staging' }}
+      #  run: ./deploy-staging.sh
+        run: echo "Workflow staging triggered!"
