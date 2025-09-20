@@ -1,10 +1,16 @@
 name: Terraform Azure Deployment
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Select the environment to deploy to'
+        required: true
+        type: choice
+        options:
+          - dev
+          - prod
+        default: 'dev'
 
 env:
   ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
@@ -32,12 +38,25 @@ jobs:
     - name: Debug - List files
       run: ls -la && echo "---" && find . -name "*.tfvars" -o -name "*.tf"
 
+    - name: Display inputs
+      run: |
+          echo "Deploying to ${{ github.event.inputs.environment }}"
+    
+
+
     # 注意：这里不再需要单独的环境变量！
     - name: Terraform Init
       run: terraform init
 
-    - name: Terraform Plan 
-      run: terraform plan -var-file="./environments/dev.tfvars"
+    - name: Terraform Plan     
+      if: ${{ github.event.inputs.environment == 'dev' }}
+      env:
+      TF_VAR_environment: ${{ dev_environment }}
+      run: terraform plan 
+      if: ${{ github.event.inputs.environment == 'prod' }}
+      env:
+      TF_VAR_environment: ${{ prod_environment }}
+      run: terraform plan 
 
     - name: Terraform Apply
       run: terraform apply -auto-approve
