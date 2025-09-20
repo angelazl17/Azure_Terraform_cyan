@@ -4,7 +4,3 @@ resource "azurerm_user_assigned_identity" "uami_demo" {
   location            = var.location
 }
 
-resource "azuread_group" "aks_admins" {
-  display_name = "aks-admins-${var.cluster_name}"
-  security_enabled = true
-}
