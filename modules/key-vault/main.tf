@@ -20,12 +20,12 @@ resource "azurerm_key_vault" "main" {
   }
 }
 
-# 3. 在 Key Vault 中存储一个示例密码
-resource "azurerm_key_vault_secret" "example" {
-  name         = "ExampleDatabaseConnectionString"
-  value        = "Server=myServer;Database=myDB;User Id=myUser;Password=myPass;"
-  key_vault_id = azurerm_key_vault.main.id
-}
+# # 3. 在 Key Vault 中存储一个示例密码
+# resource "azurerm_key_vault_secret" "example" {
+#   name         = "ExampleDatabaseConnectionString"
+#   value        = "Server=myServer;Database=myDB;User Id=myUser;Password=myPass;"
+#   key_vault_id = azurerm_key_vault.main.id
+# }
 
 
 resource "azurerm_key_vault_access_policy" "workload" {
